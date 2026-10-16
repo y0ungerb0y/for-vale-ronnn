@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Для Лерочки ❤️</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💌</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Great+Vibes&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader">
+    <div class="preloader-heart">❤️</div>
+    <p class="preloader-text">Загружаю что-то важное...</p>
+    </div>
+    <div id="hearts"></div>
+    <button id="restart-btn" title="Пройти заново">🔄</button>
+    <div class="top-actions">
+      <button id="hug-btn" title="Обнять">
+        🤗 <span class="hug-label">Обнять</span>
+      </button>
+      <button id="kiss-btn" title="Поцеловать">
+        💋 <span class="kiss-label">Поцеловать</span>
+      </button>
+      <button id="message-btn" title="Оставить послание">
+        💌 <span class="message-btn-label">Послание</span>
+      </button>
+      <button id="cert-btn" title="Сертификат">
+        🏆 <span class="cert-btn-label">Сертификат</span>
+      </button>
+      <button id="music-toggle" title="Музыка">🎵</button>
+      </div>
+    <div id="pet-widget">
+  <div id="pet-achievements"></div>
+  <button id="pet-toggle" title="Мой питомец">🐱</button>
+
+  <div id="pet-panel">
+    <div class="pet-header">
+      <span class="pet-name" id="pet-name">Никита</span>
+      <button class="pet-panel-close" id="pet-panel-close">×</button>
+    </div>
+
+    <div class="pet-body" id="pet-body">🐱</div>
+    <div class="pet-mood" id="pet-mood">Мур-мур 💕</div>
+
+    <div class="pet-bars">
+      <div class="pet-bar">
+        <span class="pet-bar-icon">🍖</span>
+        <div class="pet-bar-track"><div class="pet-bar-fill hunger" id="pet-hunger-fill"></div></div>
+      </div>
+      <div class="pet-bar">
+        <span class="pet-bar-icon">💖</span>
+        <div class="pet-bar-track"><div class="pet-bar-fill happy" id="pet-happy-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="pet-actions">
+        <button class="pet-btn" id="pet-feed">🍖 Покормить</button>
+        <button class="pet-btn" id="pet-pet">🤚 Погладить</button>
+        <button class="pet-btn" id="pet-play">🎾 Играть</button>
+    </div>
+  </div>
+</div>
+
+    <audio id="bg-music" loop preload="auto">
+    <source src="assets/music.mp3" type="audio/mpeg" />
+    </audio>
+    <div id="cert-overlay">
+    <div class="cert-box">
+        <h3 class="cert-title">Твой сертификат готов 💖</h3>
+        <div class="cert-preview">
+        <canvas id="cert-canvas"></canvas>
+        </div>
+        <div class="cert-actions">
+        <button class="cert-download" id="cert-download">Скачать PNG</button>
+        <button class="cert-close" id="cert-close">Закрыть</button>
+        </div>
+    </div>
+    </div>    
+    <div id="message-overlay">
+    <div class="message-box">
+    <h3 class="message-title">Оставь мне послание 💌</h3>
+    <p class="message-sub">Я прочитаю его сразу, как только ты нажмёшь «Отправить»</p>
+
+    <textarea
+      id="message-input"
+      placeholder="Напиши что-нибудь... что угодно. Я жду."
+      maxlength="2000"
+    ></textarea>
+
+    <div class="message-actions">
+      <button class="message-send" id="message-send">Отправить</button>
+      <button class="message-close" id="message-close">Закрыть</button>
+    </div>
+
+    <p class="message-status" id="message-status"></p>
+  </div>
+</div>    
+
+<div id="hug-overlay">
+  <div class="hug-message">Обнимаю тебя крепко-крепко</div>
+</div>
+<div id="kiss-overlay">
+  <div class="kiss-message">Целую тебя нежно-нежно</div>
+</div>
+<div id="heart-overlay">
+  <div class="heart-secret-box">
+    <div class="heart-secret-icon" id="heart-secret-icon">💌</div>
+    <h3 class="heart-secret-title" id="heart-secret-title">Ты нашла секрет</h3>
+    <p class="heart-secret-text" id="heart-secret-text"></p>
+
+    <a
+      class="heart-secret-link"
+      id="heart-secret-link"
+      href="#"
+      target="_blank"
+      rel="noopener"
+      style="display:none;"
+    >
+      Открыть →
+    </a>
+
+    <button class="heart-secret-close" id="heart-secret-close">Закрыть</button>
+  </div>
+</div>
+  <!-- 🎵 Музыка -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="assets/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- 🔒 ЭКРАН-ЗАМОК -->
+  <section class="screen" id="screen-lock">
+    <h1 class="script">Это только для тебя</h1> 
+    <p class="subtitle">Ответь на вопрос, и я пущу тебя внутрь 💌</p>
+    <p class="question" id="secret-question"></p>
+
+    <form id="lock-form" autocomplete="off">
+      <input type="password" id="secret-input" placeholder="Твой ответ..." autocomplete="off" />
+      <button class="btn" type="submit">Войти</button>
+    </form>
+
+    <p class="hint" id="hint-text"></p>
+    <p class="error" id="error-text"></p>
+  </section>
+
+  <!-- Экран 1 -->
+   <!-- 🐱 ЭКРАН «ДО НАС» -->
+    <section class="screen" id="screen-before">
+    <div class="cat-photo-wrap">
+        <img id="cat-before" src="assets/cat-sad.png" alt="Я до тебя" />
+        <p class="cat-caption">Это я. До тебя. Обычный кот.</p>
+    </div>
+    <p class="subtitle typewriter" id="before-text"></p>
+    <button class="btn" id="btn-before-next" style="display:none;" onclick="showAfter()">А что дальше? →</button>
+    </section>
+    <!-- 🐱 ЭКРАН «ПОСЛЕ» -->
+    <section class="screen" id="screen-after">
+    <div class="cat-photo-wrap">
+        <img id="cat-after" src="assets/cat-happy.png" alt="Я после" />
+        <p class="cat-caption">А это я сейчас. Видишь разницу? 😻</p>
+    </div>
+    <p class="subtitle">Ты сделала меня счастливым.<br>Спасибо, что ты есть.</p>
+    <button class="btn" onclick="goToScreen1()">Дальше →</button>
+    </section>
+    <section class="screen" id="screen-1">
+      <div class="word-cloud" id="word-cloud"></div>
+      <h1 class="script">Привет, любимая</h1>
+      <p class="subtitle typewriter" id="typewriter-1"></p>
+      <button class="btn" onclick="nextScreen()">Открыть 💌</button>
+    </section>
+
+  <!-- Экран 2 -->
+  <section class="screen" id="screen-2">
+    <h1 class="script">Я тебя люблю Лерочка</h1>
+    <p class="subtitle">
+      Каждый день с тобой — это маленькое чудо.<br>
+      Спасибо, что ты рядом.
+    </p>
+    <button class="btn" onclick="nextScreen()">Дальше →</button>
+  </section>
+    <!-- Экран 3: Звёздная карта -->
+        <section class="screen" id="screen-star-map">
+        <h1 class="script">Небо в тот день</h1>
+        <p class="starmap-caption">В этот вечер звёзды сложились в нашу историю</p>
+        <p class="subtitle" id="star-map-caption"></p>
+    
+   <div class="star-map-container">
+    <img src="assets/starmap.png" alt="Звёздное небо в день знакомства" class="starmap-image" />
+  </div>
+  
+  <button class="btn" onclick="nextScreen()">Дальше →</button>
+</section>
+  <!-- 👊 ЭКРАН: БИТВА С БОССОМ -->
+  <section class="screen" id="screen-boss">
+    <h1 class="script">Битва за нас</h1>
+    <p class="subtitle">Грусть, Скука и Ссора хотят нас разлучить.<br>Победи их любовью 💖</p>
+
+    <div class="boss-arena">
+      <div class="boss-info">
+        <div class="boss-name" id="boss-name">Грусть</div>
+        <div class="boss-bar">
+          <div class="boss-bar-fill" id="boss-hp"></div>
+        </div>
+      </div>
+
+      <div class="boss-sprite" id="boss-sprite">😢</div>
+
+      <div class="battle-actions">
+        <button class="btn btn-hit" id="btn-hit">💖 Ударить любовью</button>
+      </div>
+
+      <div class="battle-log" id="battle-log"></div>
+    </div>
+
+    <button class="btn" id="btn-boss-next" style="display:none;" onclick="nextScreen()">Дальше →</button>
+  </section>
+  <!-- 🌀 ЭКРАН: ЛАБИРИНТ К СЕРДЦУ -->
+  <section class="screen" id="screen-maze">
+    <h1 class="script">Лабиринт к сердцу</h1>
+    <p class="subtitle" id="maze-hint">Проведи свою любовь к моему сердцу 💖</p>
+
+    <div class="maze-wrap">
+      <canvas id="maze-canvas" width="420" height="420"></canvas>
+    </div>
+
+    <div class="maze-controls" id="maze-controls">
+      <button class="maze-btn" data-dir="up">↑</button>
+      <div class="maze-row">
+        <button class="maze-btn" data-dir="left">←</button>
+        <button class="maze-btn" data-dir="down">↓</button>
+        <button class="maze-btn" data-dir="right">→</button>
+      </div>
+    </div>
+
+    <div class="maze-win" id="maze-win">
+      <p class="subtitle">Ты дошла до моего сердца 💖</p>
+      <button class="btn" onclick="nextScreen()">Дальше →</button>
+    </div>
+  </section>
+
+  <!-- 📅 ЭКРАН: ВЫБОР ДАТЫ -->
+<section class="screen" id="screen-date">
+  <h1 class="script">Выбери нашу дату 💕</h1>
+  <p class="subtitle">
+    Когда мы встретимся?<br>
+    Или отметим наш первый месяц вместе :)?
+  </p>
+
+  <div class="date-form">
+    <input type="date" id="date-picker" class="date-picker" />
+    <input
+      type="text"
+      id="date-note"
+      class="date-note"
+      placeholder="Может, добавишь что-то от себя? (необязательно)"
+      maxlength="200"
+    />
+    <button class="date-send" id="date-send">Отправить 💌</button>
+    <p class="date-status" id="date-status"></p>
+  </div>
+
+  <button class="btn" id="btn-date-next" style="display:none;" onclick="nextScreen()">
+    Дальше →
+  </button>
+</section>
+  <!-- Экран 4: финал с убегающей кнопкой -->
+  <section class="screen" id="screen-3">
+    <h1 class="script" id="final-question">Ты меня любишь?</h1>
+    <p class="subtitle" id="days-counter"></p>
+
+    <div class="actions" id="actions">
+      <button class="btn btn-yes" id="btn-yes">Да 💖</button>
+      <button class="btn btn-no" id="btn-no">Нет</button>
+    </div>
+
+    <div class="final" id="final" hidden>
+      <button class="heart-big" id="heart-secret" title="Нажми на меня">
+        ❤️
+      </button>
+
+    <div class="letter-wrap">
+        <div class="letter-paper">
+        <p class="letter-text" id="love-letter"></p>
+        <p class="letter-sign" id="love-sign"></p>
+        </div>
+    </div>
+    </div>
+  </section>
+        <!-- VirtualSky с надёжного CDN -->
+        <script src="script.js"></script>      
+    </body>
+</html>
